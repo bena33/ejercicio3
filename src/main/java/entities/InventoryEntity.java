@@ -3,6 +3,7 @@ package entities;
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
@@ -21,6 +22,14 @@ public class InventoryEntity {
     @Basic
     @Column(name = "last_update", nullable = false)
     private Timestamp lastUpdate;
+    @ManyToOne
+    @JoinColumn(name = "film_id", referencedColumnName = "film_id", nullable = false)
+    private FilmEntity filmByFilmId;
+    @ManyToOne
+    @JoinColumn(name = "store_id", referencedColumnName = "store_id", nullable = false)
+    private StoreEntity storeByStoreId;
+    @OneToMany(mappedBy = "inventoryByInventoryId")
+    private Collection<RentalEntity> rentalsByInventoryId;
 
     public Object getInventoryId() {
         return inventoryId;
@@ -65,5 +74,29 @@ public class InventoryEntity {
     @Override
     public int hashCode() {
         return Objects.hash(inventoryId, filmId, storeId, lastUpdate);
+    }
+
+    public FilmEntity getFilmByFilmId() {
+        return filmByFilmId;
+    }
+
+    public void setFilmByFilmId(FilmEntity filmByFilmId) {
+        this.filmByFilmId = filmByFilmId;
+    }
+
+    public StoreEntity getStoreByStoreId() {
+        return storeByStoreId;
+    }
+
+    public void setStoreByStoreId(StoreEntity storeByStoreId) {
+        this.storeByStoreId = storeByStoreId;
+    }
+
+    public Collection<RentalEntity> getRentalsByInventoryId() {
+        return rentalsByInventoryId;
+    }
+
+    public void setRentalsByInventoryId(Collection<RentalEntity> rentalsByInventoryId) {
+        this.rentalsByInventoryId = rentalsByInventoryId;
     }
 }

@@ -3,6 +3,7 @@ package entities;
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
@@ -36,6 +37,16 @@ public class CustomerEntity {
     @Basic
     @Column(name = "last_update", nullable = false)
     private Timestamp lastUpdate;
+    @ManyToOne
+    @JoinColumn(name = "store_id", referencedColumnName = "store_id", nullable = false)
+    private StoreEntity storeByStoreId;
+    @ManyToOne
+    @JoinColumn(name = "address_id", referencedColumnName = "address_id", nullable = false)
+    private AddressEntity addressByAddressId;
+    @OneToMany(mappedBy = "customerByCustomerId")
+    private Collection<PaymentEntity> paymentsByCustomerId;
+    @OneToMany(mappedBy = "customerByCustomerId")
+    private Collection<RentalEntity> rentalsByCustomerId;
 
     public short getCustomerId() {
         return customerId;
@@ -120,5 +131,37 @@ public class CustomerEntity {
     @Override
     public int hashCode() {
         return Objects.hash(customerId, storeId, firstName, lastName, email, addressId, active, createDate, lastUpdate);
+    }
+
+    public StoreEntity getStoreByStoreId() {
+        return storeByStoreId;
+    }
+
+    public void setStoreByStoreId(StoreEntity storeByStoreId) {
+        this.storeByStoreId = storeByStoreId;
+    }
+
+    public AddressEntity getAddressByAddressId() {
+        return addressByAddressId;
+    }
+
+    public void setAddressByAddressId(AddressEntity addressByAddressId) {
+        this.addressByAddressId = addressByAddressId;
+    }
+
+    public Collection<PaymentEntity> getPaymentsByCustomerId() {
+        return paymentsByCustomerId;
+    }
+
+    public void setPaymentsByCustomerId(Collection<PaymentEntity> paymentsByCustomerId) {
+        this.paymentsByCustomerId = paymentsByCustomerId;
+    }
+
+    public Collection<RentalEntity> getRentalsByCustomerId() {
+        return rentalsByCustomerId;
+    }
+
+    public void setRentalsByCustomerId(Collection<RentalEntity> rentalsByCustomerId) {
+        this.rentalsByCustomerId = rentalsByCustomerId;
     }
 }

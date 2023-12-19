@@ -3,6 +3,7 @@ package entities;
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
@@ -30,6 +31,17 @@ public class RentalEntity {
     @Basic
     @Column(name = "last_update", nullable = false)
     private Timestamp lastUpdate;
+    @ManyToOne
+    @JoinColumn(name = "customer_id", referencedColumnName = "customer_id", nullable = false)
+    private CustomerEntity customerByCustomerId;
+    @OneToMany(mappedBy = "rentalByRentalId")
+    private Collection<PaymentEntity> paymentsByRentalId;
+    @ManyToOne
+    @JoinColumn(name = "inventory_id", referencedColumnName = "inventory_id", nullable = false)
+    private InventoryEntity inventoryByInventoryId;
+    @ManyToOne
+    @JoinColumn(name = "staff_id", referencedColumnName = "staff_id", nullable = false)
+    private StaffEntity staffByStaffId;
 
     public int getRentalId() {
         return rentalId;
@@ -98,5 +110,37 @@ public class RentalEntity {
     @Override
     public int hashCode() {
         return Objects.hash(rentalId, rentalDate, inventoryId, customerId, returnDate, staffId, lastUpdate);
+    }
+
+    public CustomerEntity getCustomerByCustomerId() {
+        return customerByCustomerId;
+    }
+
+    public void setCustomerByCustomerId(CustomerEntity customerByCustomerId) {
+        this.customerByCustomerId = customerByCustomerId;
+    }
+
+    public Collection<PaymentEntity> getPaymentsByRentalId() {
+        return paymentsByRentalId;
+    }
+
+    public void setPaymentsByRentalId(Collection<PaymentEntity> paymentsByRentalId) {
+        this.paymentsByRentalId = paymentsByRentalId;
+    }
+
+    public InventoryEntity getInventoryByInventoryId() {
+        return inventoryByInventoryId;
+    }
+
+    public void setInventoryByInventoryId(InventoryEntity inventoryByInventoryId) {
+        this.inventoryByInventoryId = inventoryByInventoryId;
+    }
+
+    public StaffEntity getStaffByStaffId() {
+        return staffByStaffId;
+    }
+
+    public void setStaffByStaffId(StaffEntity staffByStaffId) {
+        this.staffByStaffId = staffByStaffId;
     }
 }

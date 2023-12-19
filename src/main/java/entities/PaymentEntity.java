@@ -31,6 +31,12 @@ public class PaymentEntity {
     @Basic
     @Column(name = "last_update", nullable = false)
     private Timestamp lastUpdate;
+    @ManyToOne
+    @JoinColumn(name = "customer_id", referencedColumnName = "customer_id", nullable = false)
+    private CustomerEntity customerByCustomerId;
+    @ManyToOne
+    @JoinColumn(name = "rental_id", referencedColumnName = "rental_id")
+    private RentalEntity rentalByRentalId;
 
     public short getPaymentId() {
         return paymentId;
@@ -99,5 +105,21 @@ public class PaymentEntity {
     @Override
     public int hashCode() {
         return Objects.hash(paymentId, customerId, staffId, rentalId, amount, paymentDate, lastUpdate);
+    }
+
+    public CustomerEntity getCustomerByCustomerId() {
+        return customerByCustomerId;
+    }
+
+    public void setCustomerByCustomerId(CustomerEntity customerByCustomerId) {
+        this.customerByCustomerId = customerByCustomerId;
+    }
+
+    public RentalEntity getRentalByRentalId() {
+        return rentalByRentalId;
+    }
+
+    public void setRentalByRentalId(RentalEntity rentalByRentalId) {
+        this.rentalByRentalId = rentalByRentalId;
     }
 }

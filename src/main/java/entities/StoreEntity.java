@@ -3,6 +3,7 @@ package entities;
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
@@ -21,6 +22,12 @@ public class StoreEntity {
     @Basic
     @Column(name = "last_update", nullable = false)
     private Timestamp lastUpdate;
+    @OneToMany(mappedBy = "storeByStoreId")
+    private Collection<InventoryEntity> inventoriesByStoreId;
+    @OneToMany(mappedBy = "storeByStoreId")
+    private Collection<CustomerEntity> customersByStoreId;
+    @OneToMany(mappedBy = "storeByStoreId")
+    private Collection<StaffEntity> staffByStoreId;
 
     public byte getStoreId() {
         return storeId;
@@ -65,5 +72,29 @@ public class StoreEntity {
     @Override
     public int hashCode() {
         return Objects.hash(storeId, managerStaffId, addressId, lastUpdate);
+    }
+
+    public Collection<InventoryEntity> getInventoriesByStoreId() {
+        return inventoriesByStoreId;
+    }
+
+    public void setInventoriesByStoreId(Collection<InventoryEntity> inventoriesByStoreId) {
+        this.inventoriesByStoreId = inventoriesByStoreId;
+    }
+
+    public Collection<CustomerEntity> getCustomersByStoreId() {
+        return customersByStoreId;
+    }
+
+    public void setCustomersByStoreId(Collection<CustomerEntity> customersByStoreId) {
+        this.customersByStoreId = customersByStoreId;
+    }
+
+    public Collection<StaffEntity> getStaffByStoreId() {
+        return staffByStoreId;
+    }
+
+    public void setStaffByStoreId(Collection<StaffEntity> staffByStoreId) {
+        this.staffByStoreId = staffByStoreId;
     }
 }

@@ -6,7 +6,7 @@ import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
-@Table(name = "city", schema = "sakila", catalog = "")
+@Table(name = "city", schema = "sakila")
 public class CityEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -21,6 +21,9 @@ public class CityEntity {
     @Basic
     @Column(name = "last_update", nullable = false)
     private Timestamp lastUpdate;
+    @ManyToOne
+    @JoinColumn(name = "country_id", referencedColumnName = "country_id", nullable = false)
+    private CountryEntity countryByCountryId;
 
     public short getCityId() {
         return cityId;
@@ -65,5 +68,13 @@ public class CityEntity {
     @Override
     public int hashCode() {
         return Objects.hash(cityId, city, countryId, lastUpdate);
+    }
+
+    public CountryEntity getCountryByCountryId() {
+        return countryByCountryId;
+    }
+
+    public void setCountryByCountryId(CountryEntity countryByCountryId) {
+        this.countryByCountryId = countryByCountryId;
     }
 }

@@ -3,6 +3,7 @@ package entities;
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
@@ -33,6 +34,10 @@ public class AddressEntity {
     @Basic
     @Column(name = "last_update", nullable = false)
     private Timestamp lastUpdate;
+    @OneToMany(mappedBy = "addressByAddressId")
+    private Collection<CustomerEntity> customersByAddressId;
+    @OneToMany(mappedBy = "addressByAddressId")
+    private Collection<StaffEntity> staffByAddressId;
 
     public short getAddressId() {
         return addressId;
@@ -109,5 +114,21 @@ public class AddressEntity {
     @Override
     public int hashCode() {
         return Objects.hash(addressId, address, address2, district, cityId, postalCode, phone, lastUpdate);
+    }
+
+    public Collection<CustomerEntity> getCustomersByAddressId() {
+        return customersByAddressId;
+    }
+
+    public void setCustomersByAddressId(Collection<CustomerEntity> customersByAddressId) {
+        this.customersByAddressId = customersByAddressId;
+    }
+
+    public Collection<StaffEntity> getStaffByAddressId() {
+        return staffByAddressId;
+    }
+
+    public void setStaffByAddressId(Collection<StaffEntity> staffByAddressId) {
+        this.staffByAddressId = staffByAddressId;
     }
 }

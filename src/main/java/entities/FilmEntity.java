@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
@@ -49,6 +50,8 @@ public class FilmEntity {
     @Basic
     @Column(name = "last_update", nullable = false)
     private Timestamp lastUpdate;
+    @OneToMany(mappedBy = "filmByFilmId")
+    private Collection<InventoryEntity> inventoriesByFilmId;
 
     public short getFilmId() {
         return filmId;
@@ -165,5 +168,13 @@ public class FilmEntity {
     @Override
     public int hashCode() {
         return Objects.hash(filmId, title, description, releaseYear, languageId, originalLanguageId, rentalDuration, rentalRate, length, replacementCost, rating, specialFeatures, lastUpdate);
+    }
+
+    public Collection<InventoryEntity> getInventoriesByFilmId() {
+        return inventoriesByFilmId;
+    }
+
+    public void setInventoriesByFilmId(Collection<InventoryEntity> inventoriesByFilmId) {
+        this.inventoriesByFilmId = inventoriesByFilmId;
     }
 }
