@@ -3,10 +3,11 @@ package entities;
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-@Table(name = "language", schema = "sakila")
+@Table(name = "language", schema = "sakila", catalog = "")
 public class LanguageEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -18,6 +19,8 @@ public class LanguageEntity {
     @Basic
     @Column(name = "last_update", nullable = false)
     private Timestamp lastUpdate;
+    @OneToMany(mappedBy = "languageByOriginalLanguageId")
+    private Collection<FilmEntity> filmsByLanguageId_0;
 
     public byte getLanguageId() {
         return languageId;
@@ -54,5 +57,13 @@ public class LanguageEntity {
     @Override
     public int hashCode() {
         return Objects.hash(languageId, name, lastUpdate);
+    }
+
+    public Collection<FilmEntity> getFilmsByLanguageId_0() {
+        return filmsByLanguageId_0;
+    }
+
+    public void setFilmsByLanguageId_0(Collection<FilmEntity> filmsByLanguageId_0) {
+        this.filmsByLanguageId_0 = filmsByLanguageId_0;
     }
 }

@@ -5,10 +5,12 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
-@Table(name = "film", schema = "sakila")
+@Table(name = "film", schema = "sakila", catalog = "")
 public class FilmEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -52,6 +54,17 @@ public class FilmEntity {
     private Timestamp lastUpdate;
     @OneToMany(mappedBy = "filmByFilmId")
     private Collection<InventoryEntity> inventoriesByFilmId;
+//Relaciones
+    @ManyToMany
+    @JoinTable(
+            name = "film_category",
+            joinColumns = @JoinColumn(name = "film_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
+    private Set<CategoryEntity> categories;
+    @ManyToOne
+    @JoinColumn(name = "original_language_id", referencedColumnName = "language_id")
+    private LanguageEntity languageByOriginalLanguageId;
 
     public short getFilmId() {
         return filmId;
@@ -176,5 +189,13 @@ public class FilmEntity {
 
     public void setInventoriesByFilmId(Collection<InventoryEntity> inventoriesByFilmId) {
         this.inventoriesByFilmId = inventoriesByFilmId;
+    }
+
+    public LanguageEntity getLanguageByOriginalLanguageId() {
+        return languageByOriginalLanguageId;
+    }
+
+    public void setLanguageByOriginalLanguageId(LanguageEntity languageByOriginalLanguageId) {
+        this.languageByOriginalLanguageId = languageByOriginalLanguageId;
     }
 }

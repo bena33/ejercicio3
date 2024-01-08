@@ -3,7 +3,9 @@ package entities;
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "category", schema = "sakila")
@@ -18,6 +20,10 @@ public class CategoryEntity {
     @Basic
     @Column(name = "last_update", nullable = false)
     private Timestamp lastUpdate;
+    //relaciones
+    @ManyToMany(mappedBy = "categories")
+    private Set<FilmEntity> films;
+
 
     public byte getCategoryId() {
         return categoryId;
