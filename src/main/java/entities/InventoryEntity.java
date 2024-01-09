@@ -12,7 +12,7 @@ public class InventoryEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "inventory_id", nullable = false)
-    private Object inventoryId;
+    private short inventoryId;
     @Basic
     @Column(name = "film_id", nullable = false)
     private short filmId;
@@ -35,7 +35,7 @@ public class InventoryEntity {
         return inventoryId;
     }
 
-    public void setInventoryId(Object inventoryId) {
+    public void setInventoryId(short inventoryId) {
         this.inventoryId = inventoryId;
     }
 

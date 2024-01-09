@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.sql.Timestamp;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "actor", schema = "sakila")
@@ -21,6 +22,10 @@ public class ActorEntity {
     @Basic
     @Column(name = "last_update", nullable = false)
     private Timestamp lastUpdate;
+
+    //Relaciones
+    @ManyToMany(mappedBy = "actors")
+    private Set<FilmEntity> films;
 
     public short getActorId() {
         return actorId;

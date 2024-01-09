@@ -62,9 +62,19 @@ public class FilmEntity {
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
     private Set<CategoryEntity> categories;
+    @ManyToMany
+    @JoinTable(
+            name = "film_actor",
+            joinColumns = @JoinColumn(name = "film_id"),
+            inverseJoinColumns = @JoinColumn(name = "actor_id")
+    )
+    private Set<ActorEntity> actors;
     @ManyToOne
     @JoinColumn(name = "original_language_id", referencedColumnName = "language_id")
     private LanguageEntity languageByOriginalLanguageId;
+    @ManyToOne
+    @JoinColumn(name = "language_id", referencedColumnName = "language_id", nullable = false)
+    private LanguageEntity languageByLanguageId;
 
     public short getFilmId() {
         return filmId;
@@ -197,5 +207,13 @@ public class FilmEntity {
 
     public void setLanguageByOriginalLanguageId(LanguageEntity languageByOriginalLanguageId) {
         this.languageByOriginalLanguageId = languageByOriginalLanguageId;
+    }
+
+    public LanguageEntity getLanguageByLanguageId() {
+        return languageByLanguageId;
+    }
+
+    public void setLanguageByLanguageId(LanguageEntity languageByLanguageId) {
+        this.languageByLanguageId = languageByLanguageId;
     }
 }

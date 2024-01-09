@@ -21,6 +21,8 @@ public class LanguageEntity {
     private Timestamp lastUpdate;
     @OneToMany(mappedBy = "languageByOriginalLanguageId")
     private Collection<FilmEntity> filmsByLanguageId_0;
+    @OneToMany(mappedBy = "languageByLanguageId")
+    private Collection<FilmEntity> filmsByLanguageId;
 
     public byte getLanguageId() {
         return languageId;
@@ -65,5 +67,13 @@ public class LanguageEntity {
 
     public void setFilmsByLanguageId_0(Collection<FilmEntity> filmsByLanguageId_0) {
         this.filmsByLanguageId_0 = filmsByLanguageId_0;
+    }
+
+    public Collection<FilmEntity> getFilmsByLanguageId() {
+        return filmsByLanguageId;
+    }
+
+    public void setFilmsByLanguageId(Collection<FilmEntity> filmsByLanguageId) {
+        this.filmsByLanguageId = filmsByLanguageId;
     }
 }

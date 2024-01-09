@@ -3,10 +3,11 @@ package entities;
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-@Table(name = "city", schema = "sakila")
+@Table(name = "city", schema = "sakila", catalog = "")
 public class CityEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -24,6 +25,8 @@ public class CityEntity {
     @ManyToOne
     @JoinColumn(name = "country_id", referencedColumnName = "country_id", nullable = false)
     private CountryEntity countryByCountryId;
+    @OneToMany(mappedBy = "cityByCityId")
+    private Collection<AddressEntity> addressesByCityId;
 
     public short getCityId() {
         return cityId;
@@ -76,5 +79,13 @@ public class CityEntity {
 
     public void setCountryByCountryId(CountryEntity countryByCountryId) {
         this.countryByCountryId = countryByCountryId;
+    }
+
+    public Collection<AddressEntity> getAddressesByCityId() {
+        return addressesByCityId;
+    }
+
+    public void setAddressesByCityId(Collection<AddressEntity> addressesByCityId) {
+        this.addressesByCityId = addressesByCityId;
     }
 }

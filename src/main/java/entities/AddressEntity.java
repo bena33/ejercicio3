@@ -38,6 +38,9 @@ public class AddressEntity {
     private Collection<CustomerEntity> customersByAddressId;
     @OneToMany(mappedBy = "addressByAddressId")
     private Collection<StaffEntity> staffByAddressId;
+    @ManyToOne
+    @JoinColumn(name = "city_id", referencedColumnName = "city_id", nullable = false)
+    private CityEntity cityByCityId;
 
     public short getAddressId() {
         return addressId;
@@ -130,5 +133,13 @@ public class AddressEntity {
 
     public void setStaffByAddressId(Collection<StaffEntity> staffByAddressId) {
         this.staffByAddressId = staffByAddressId;
+    }
+
+    public CityEntity getCityByCityId() {
+        return cityByCityId;
+    }
+
+    public void setCityByCityId(CityEntity cityByCityId) {
+        this.cityByCityId = cityByCityId;
     }
 }
