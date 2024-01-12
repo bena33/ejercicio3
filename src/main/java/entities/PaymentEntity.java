@@ -14,13 +14,13 @@ public class PaymentEntity {
     @Column(name = "payment_id", nullable = false)
     private short paymentId;
     @Basic
-    @Column(name = "customer_id", nullable = false)
+    @Column(name = "customer_id", nullable = false , insertable = false, updatable = false)
     private short customerId;
     @Basic
-    @Column(name = "staff_id", nullable = false)
+    @Column(name = "staff_id", nullable = false , insertable = false, updatable = false)
     private byte staffId;
     @Basic
-    @Column(name = "rental_id", nullable = true)
+    @Column(name = "rental_id", nullable = true , insertable = false, updatable = false)
     private Integer rentalId;
     @Basic
     @Column(name = "amount", nullable = false, precision = 2)

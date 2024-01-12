@@ -2,7 +2,9 @@ package entities;
 
 import jakarta.persistence.*;
 
+import java.awt.*;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -25,7 +27,7 @@ public class ActorEntity {
 
     //Relaciones
     @ManyToMany(mappedBy = "actors")
-    private Set<FilmEntity> films;
+    private List<FilmEntity> films;
 
     public short getActorId() {
         return actorId;

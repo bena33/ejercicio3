@@ -17,7 +17,7 @@ public class CityEntity {
     @Column(name = "city", nullable = false, length = 50)
     private String city;
     @Basic
-    @Column(name = "country_id", nullable = false)
+    @Column(name = "country_id", nullable = false , insertable = false, updatable = false)
     private short countryId;
     @Basic
     @Column(name = "last_update", nullable = false)

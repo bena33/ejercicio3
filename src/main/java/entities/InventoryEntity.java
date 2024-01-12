@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -14,10 +15,10 @@ public class InventoryEntity {
     @Column(name = "inventory_id", nullable = false)
     private short inventoryId;
     @Basic
-    @Column(name = "film_id", nullable = false)
+    @Column(name = "film_id", nullable = false  , insertable = false, updatable = false)
     private short filmId;
     @Basic
-    @Column(name = "store_id", nullable = false)
+    @Column(name = "store_id", nullable = false  , insertable = false, updatable = false)
     private byte storeId;
     @Basic
     @Column(name = "last_update", nullable = false)
@@ -29,7 +30,7 @@ public class InventoryEntity {
     @JoinColumn(name = "store_id", referencedColumnName = "store_id", nullable = false)
     private StoreEntity storeByStoreId;
     @OneToMany(mappedBy = "inventoryByInventoryId")
-    private Collection<RentalEntity> rentalsByInventoryId;
+    private List<RentalEntity> rentalsByInventoryId;
 
     public Object getInventoryId() {
         return inventoryId;
@@ -92,11 +93,11 @@ public class InventoryEntity {
         this.storeByStoreId = storeByStoreId;
     }
 
-    public Collection<RentalEntity> getRentalsByInventoryId() {
+    public List<RentalEntity> getRentalsByInventoryId() {
         return rentalsByInventoryId;
     }
 
-    public void setRentalsByInventoryId(Collection<RentalEntity> rentalsByInventoryId) {
+    public void setRentalsByInventoryId(List<RentalEntity> rentalsByInventoryId) {
         this.rentalsByInventoryId = rentalsByInventoryId;
     }
 }

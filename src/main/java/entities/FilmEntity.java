@@ -4,17 +4,14 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
-@Table(name = "film", schema = "sakila", catalog = "")
+@Table(name = "film", schema = "sakila")
 public class FilmEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "film_id", nullable = false)
+    @Column(name = "film_id", nullable = false , insertable = false, updatable = false)
     private short filmId;
     @Basic
     @Column(name = "title", nullable = false, length = 128)
@@ -26,10 +23,10 @@ public class FilmEntity {
     @Column(name = "release_year", nullable = true)
     private Object releaseYear;
     @Basic
-    @Column(name = "language_id", nullable = false)
+    @Column(name = "language_id", nullable = false , insertable = false, updatable = false)
     private byte languageId;
     @Basic
-    @Column(name = "original_language_id", nullable = true)
+    @Column(name = "original_language_id", nullable = true , insertable = false, updatable = false)
     private Byte originalLanguageId;
     @Basic
     @Column(name = "rental_duration", nullable = false)
@@ -53,7 +50,7 @@ public class FilmEntity {
     @Column(name = "last_update", nullable = false)
     private Timestamp lastUpdate;
     @OneToMany(mappedBy = "filmByFilmId")
-    private Collection<InventoryEntity> inventoriesByFilmId;
+    private List<InventoryEntity> inventoriesByFilmId;
 //Relaciones
     @ManyToMany
     @JoinTable(
@@ -61,14 +58,14 @@ public class FilmEntity {
             joinColumns = @JoinColumn(name = "film_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
-    private Set<CategoryEntity> categories;
+    private List<CategoryEntity> categories;
     @ManyToMany
     @JoinTable(
             name = "film_actor",
             joinColumns = @JoinColumn(name = "film_id"),
             inverseJoinColumns = @JoinColumn(name = "actor_id")
     )
-    private Set<ActorEntity> actors;
+    private List<ActorEntity> actors;
     @ManyToOne
     @JoinColumn(name = "original_language_id", referencedColumnName = "language_id")
     private LanguageEntity languageByOriginalLanguageId;
@@ -193,11 +190,11 @@ public class FilmEntity {
         return Objects.hash(filmId, title, description, releaseYear, languageId, originalLanguageId, rentalDuration, rentalRate, length, replacementCost, rating, specialFeatures, lastUpdate);
     }
 
-    public Collection<InventoryEntity> getInventoriesByFilmId() {
+    public List<InventoryEntity> getInventoriesByFilmId() {
         return inventoriesByFilmId;
     }
 
-    public void setInventoriesByFilmId(Collection<InventoryEntity> inventoriesByFilmId) {
+    public void setInventoriesByFilmId(List<InventoryEntity> inventoriesByFilmId) {
         this.inventoriesByFilmId = inventoriesByFilmId;
     }
 
@@ -215,5 +212,20 @@ public class FilmEntity {
 
     public void setLanguageByLanguageId(LanguageEntity languageByLanguageId) {
         this.languageByLanguageId = languageByLanguageId;
+    }
+    public List<CategoryEntity> getCategoriesByCategoriesId() {
+        return categories;
+    }
+
+    public void setCategoriesByCategoriesId(List<CategoryEntity> categories) {
+        this.categories = categories;
+    }
+
+    public List<ActorEntity> getActorsByActorsId() {
+        return actors;
+    }
+
+    public void setActorsByActorsId(List<ActorEntity> actors) {
+        this.actors = actors;
     }
 }

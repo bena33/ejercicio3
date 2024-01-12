@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-@Table(name = "address", schema = "sakila")
+@Table(name = "address", schema = "sakila", catalog = "")
 public class AddressEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -23,7 +23,7 @@ public class AddressEntity {
     @Column(name = "district", nullable = false, length = 20)
     private String district;
     @Basic
-    @Column(name = "city_id", nullable = false)
+    @Column(name = "city_id", nullable = false , insertable = false, updatable = false)
     private short cityId;
     @Basic
     @Column(name = "postal_code", nullable = true, length = 10)
@@ -41,6 +41,8 @@ public class AddressEntity {
     @ManyToOne
     @JoinColumn(name = "city_id", referencedColumnName = "city_id", nullable = false)
     private CityEntity cityByCityId;
+    @OneToMany(mappedBy = "addressByAddressId")
+    private Collection<StoreEntity> storesByAddressId;
 
     public short getAddressId() {
         return addressId;
@@ -141,5 +143,13 @@ public class AddressEntity {
 
     public void setCityByCityId(CityEntity cityByCityId) {
         this.cityByCityId = cityByCityId;
+    }
+
+    public Collection<StoreEntity> getStoresByAddressId() {
+        return storesByAddressId;
+    }
+
+    public void setStoresByAddressId(Collection<StoreEntity> storesByAddressId) {
+        this.storesByAddressId = storesByAddressId;
     }
 }

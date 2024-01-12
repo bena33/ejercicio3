@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -14,7 +15,7 @@ public class CustomerEntity {
     @Column(name = "customer_id", nullable = false)
     private short customerId;
     @Basic
-    @Column(name = "store_id", nullable = false)
+    @Column(name = "store_id", nullable = false , insertable = false, updatable = false)
     private byte storeId;
     @Basic
     @Column(name = "first_name", nullable = false, length = 45)
@@ -26,7 +27,7 @@ public class CustomerEntity {
     @Column(name = "email", nullable = true, length = 50)
     private String email;
     @Basic
-    @Column(name = "address_id", nullable = false)
+    @Column(name = "address_id", nullable = false , insertable = false, updatable = false)
     private short addressId;
     @Basic
     @Column(name = "active", nullable = false)
@@ -44,9 +45,9 @@ public class CustomerEntity {
     @JoinColumn(name = "address_id", referencedColumnName = "address_id", nullable = false)
     private AddressEntity addressByAddressId;
     @OneToMany(mappedBy = "customerByCustomerId")
-    private Collection<PaymentEntity> paymentsByCustomerId;
+    private List<PaymentEntity> paymentsByCustomerId;
     @OneToMany(mappedBy = "customerByCustomerId")
-    private Collection<RentalEntity> rentalsByCustomerId;
+    private List<RentalEntity> rentalsByCustomerId;
 
     public short getCustomerId() {
         return customerId;
@@ -149,19 +150,19 @@ public class CustomerEntity {
         this.addressByAddressId = addressByAddressId;
     }
 
-    public Collection<PaymentEntity> getPaymentsByCustomerId() {
+    public List<PaymentEntity> getPaymentsByCustomerId() {
         return paymentsByCustomerId;
     }
 
-    public void setPaymentsByCustomerId(Collection<PaymentEntity> paymentsByCustomerId) {
+    public void setPaymentsByCustomerId(List<PaymentEntity> paymentsByCustomerId) {
         this.paymentsByCustomerId = paymentsByCustomerId;
     }
 
-    public Collection<RentalEntity> getRentalsByCustomerId() {
+    public List<RentalEntity> getRentalsByCustomerId() {
         return rentalsByCustomerId;
     }
 
-    public void setRentalsByCustomerId(Collection<RentalEntity> rentalsByCustomerId) {
+    public void setRentalsByCustomerId(List<RentalEntity> rentalsByCustomerId) {
         this.rentalsByCustomerId = rentalsByCustomerId;
     }
 }

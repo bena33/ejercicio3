@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.sql.Timestamp;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -22,7 +23,7 @@ public class CategoryEntity {
     private Timestamp lastUpdate;
     //relaciones
     @ManyToMany(mappedBy = "categories")
-    private Set<FilmEntity> films;
+    private List<FilmEntity> films;
 
 
     public byte getCategoryId() {

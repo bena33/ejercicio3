@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -17,16 +18,16 @@ public class RentalEntity {
     @Column(name = "rental_date", nullable = false)
     private Timestamp rentalDate;
     @Basic
-    @Column(name = "inventory_id", nullable = false)
+    @Column(name = "inventory_id", nullable = false , insertable = false, updatable = false)
     private Object inventoryId;
     @Basic
-    @Column(name = "customer_id", nullable = false)
+    @Column(name = "customer_id", nullable = false , insertable = false, updatable = false)
     private short customerId;
     @Basic
     @Column(name = "return_date", nullable = true)
     private Timestamp returnDate;
     @Basic
-    @Column(name = "staff_id", nullable = false)
+    @Column(name = "staff_id", nullable = false , insertable = false, updatable = false)
     private byte staffId;
     @Basic
     @Column(name = "last_update", nullable = false)
@@ -35,7 +36,7 @@ public class RentalEntity {
     @JoinColumn(name = "customer_id", referencedColumnName = "customer_id", nullable = false)
     private CustomerEntity customerByCustomerId;
     @OneToMany(mappedBy = "rentalByRentalId")
-    private Collection<PaymentEntity> paymentsByRentalId;
+    private List<PaymentEntity> paymentsByRentalId;
     @ManyToOne
     @JoinColumn(name = "inventory_id", referencedColumnName = "inventory_id", nullable = false)
     private InventoryEntity inventoryByInventoryId;
@@ -120,11 +121,11 @@ public class RentalEntity {
         this.customerByCustomerId = customerByCustomerId;
     }
 
-    public Collection<PaymentEntity> getPaymentsByRentalId() {
+    public List<PaymentEntity> getPaymentsByRentalId() {
         return paymentsByRentalId;
     }
 
-    public void setPaymentsByRentalId(Collection<PaymentEntity> paymentsByRentalId) {
+    public void setPaymentsByRentalId(List<PaymentEntity> paymentsByRentalId) {
         this.paymentsByRentalId = paymentsByRentalId;
     }
 

@@ -21,7 +21,7 @@ public class StaffEntity {
     @Column(name = "last_name", nullable = false, length = 45)
     private String lastName;
     @Basic
-    @Column(name = "address_id", nullable = false)
+    @Column(name = "address_id", nullable = false , insertable = false, updatable = false)
     private short addressId;
     @Basic
     @Column(name = "picture", nullable = true)
@@ -30,7 +30,7 @@ public class StaffEntity {
     @Column(name = "email", nullable = true, length = 50)
     private String email;
     @Basic
-    @Column(name = "store_id", nullable = false)
+    @Column(name = "store_id", nullable = false , insertable = false, updatable = false)
     private byte storeId;
     @Basic
     @Column(name = "active", nullable = false)

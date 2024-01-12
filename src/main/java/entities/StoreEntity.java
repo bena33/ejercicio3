@@ -14,10 +14,10 @@ public class StoreEntity {
     @Column(name = "store_id", nullable = false)
     private byte storeId;
     @Basic
-    @Column(name = "manager_staff_id", nullable = false)
+    @Column(name = "manager_staff_id", nullable = false , insertable = false, updatable = false)
     private byte managerStaffId;
     @Basic
-    @Column(name = "address_id", nullable = false)
+    @Column(name = "address_id", nullable = false , insertable = false, updatable = false)
     private short addressId;
     @Basic
     @Column(name = "last_update", nullable = false)
@@ -28,6 +28,9 @@ public class StoreEntity {
     private Collection<CustomerEntity> customersByStoreId;
     @OneToMany(mappedBy = "storeByStoreId")
     private Collection<StaffEntity> staffByStoreId;
+    @ManyToOne
+    @JoinColumn(name = "address_id", referencedColumnName = "address_id", nullable = false)
+    private AddressEntity addressByAddressId;
 
     public byte getStoreId() {
         return storeId;
@@ -96,5 +99,13 @@ public class StoreEntity {
 
     public void setStaffByStoreId(Collection<StaffEntity> staffByStoreId) {
         this.staffByStoreId = staffByStoreId;
+    }
+
+    public AddressEntity getAddressByAddressId() {
+        return addressByAddressId;
+    }
+
+    public void setAddressByAddressId(AddressEntity addressByAddressId) {
+        this.addressByAddressId = addressByAddressId;
     }
 }
