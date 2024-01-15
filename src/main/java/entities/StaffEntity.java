@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -45,7 +46,7 @@ public class StaffEntity {
     @Column(name = "last_update", nullable = false)
     private Timestamp lastUpdate;
     @OneToMany(mappedBy = "staffByStaffId")
-    private Collection<RentalEntity> rentalsByStaffId;
+    private List<RentalEntity> rentalsByStaffId;
     @ManyToOne
     @JoinColumn(name = "address_id", referencedColumnName = "address_id", nullable = false)
     private AddressEntity addressByAddressId;
@@ -156,11 +157,11 @@ public class StaffEntity {
         return result;
     }
 
-    public Collection<RentalEntity> getRentalsByStaffId() {
+    public List<RentalEntity> getRentalsByStaffId() {
         return rentalsByStaffId;
     }
 
-    public void setRentalsByStaffId(Collection<RentalEntity> rentalsByStaffId) {
+    public void setRentalsByStaffId(List<RentalEntity> rentalsByStaffId) {
         this.rentalsByStaffId = rentalsByStaffId;
     }
 
