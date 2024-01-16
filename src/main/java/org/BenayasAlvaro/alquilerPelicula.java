@@ -5,6 +5,10 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class alquilerPelicula {
@@ -20,45 +24,51 @@ public class alquilerPelicula {
 
                 if (empleado == null) {
                     System.out.println("Error: Empleado no encontrado.");
-                    return;
+                }else{
+                    StoreEntity tienda = empleado.getStoreByStoreId();
+
+                    System.out.println("Ingrese el ID de la película que desea alquilar: ");
+                    int peliculaId = scanner.nextInt();
+                    FilmEntity pelicula = em.find(FilmEntity.class, peliculaId);
+
+                    if (pelicula == null) {
+                        System.out.println("Error: Película no encontrada en el inventario de la tienda.");
+                    }else{
+                        System.out.println("Ingrese el ID del cliente que realiza el alquiler: ");
+                        int clienteId = scanner.nextInt();
+                        CustomerEntity cliente = em.find(CustomerEntity.class, clienteId);
+
+                        if (cliente == null) {
+                            System.out.println("Error: Cliente no encontrado.");
+                        }else{
+                            RentalEntity alquiler = new RentalEntity();
+                            alquiler.setStaffByStaffId(empleado);
+
+                            List<InventoryEntity> inventario = new ArrayList<>(pelicula.getInventoriesByFilmId());
+                            if (!inventario.isEmpty()) {
+                                alquiler.setInventoryId(inventario.get(0));
+                            }
+                            alquiler.setRentalDate(Timestamp.from(Instant.now()));
+
+                            alquiler.setCustomerByCustomerId(cliente);
+
+                            em.getTransaction().begin();
+                            em.persist(alquiler);
+                            em.flush();
+                            em.getTransaction().commit();
+
+                            System.out.println("Alquiler realizado con éxito.");
+
+                        }
+                    }
                 }
 
-                StoreEntity tienda = empleado.getStoreByStoreId();
 
-                System.out.println("Ingrese el ID de la película que desea alquilar: ");
-                int peliculaId = scanner.nextInt();
-                FilmEntity pelicula = em.find(FilmEntity.class, peliculaId);
 
-                if (pelicula == null) {
-                    System.out.println("Error: Película no encontrada en el inventario de la tienda.");
-                    return;
-                }
 
-                // Aquí puedes agregar lógica adicional para verificar el stock en la tienda.
 
-                System.out.println("Ingrese el ID del cliente que realiza el alquiler: ");
-                int clienteId = scanner.nextInt();
-                CustomerEntity cliente = em.find(CustomerEntity.class, clienteId);
 
-                if (cliente == null) {
-                    System.out.println("Error: Cliente no encontrado.");
-                    return;
-                }
 
-                // Si todas las comprobaciones han pasado, crea un nuevo alquiler
-                RentalEntity alquiler = new RentalEntity();
-                alquiler.setStaffByStaffId(empleado);
-                //alquiler.setPeliculaByPeliculaId(pelicula);
-                alquiler.setCustomerByCustomerId(cliente);
-
-                // Aquí puedes configurar más detalles del alquiler si es necesario.
-
-                // Persistir el nuevo alquiler
-                em.getTransaction().begin();
-                //em.persist(alquiler);
-                em.getTransaction().commit();
-
-                System.out.println("Alquiler realizado con éxito.");
             } finally {
                 em.close();
                 emf.close();

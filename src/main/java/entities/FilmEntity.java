@@ -66,6 +66,7 @@ public class FilmEntity {
             inverseJoinColumns = @JoinColumn(name = "actor_id")
     )
     private List<ActorEntity> actors;
+
     @ManyToOne
     @JoinColumn(name = "original_language_id", referencedColumnName = "language_id")
     private LanguageEntity languageByOriginalLanguageId;

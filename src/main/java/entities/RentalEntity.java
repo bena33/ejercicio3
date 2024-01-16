@@ -30,7 +30,7 @@ public class RentalEntity {
     @Column(name = "staff_id", nullable = false , insertable = false, updatable = false)
     private byte staffId;
     @Basic
-    @Column(name = "last_update", nullable = false)
+    @Column(name = "last_update", nullable = false, updatable = false, insertable = false)
     private Timestamp lastUpdate;
     @ManyToOne
     @JoinColumn(name = "customer_id", referencedColumnName = "customer_id", nullable = false)
@@ -38,7 +38,7 @@ public class RentalEntity {
     @OneToMany(mappedBy = "rentalByRentalId")
     private List<PaymentEntity> paymentsByRentalId;
     @ManyToOne
-    @JoinColumn(name = "inventory_id", referencedColumnName = "inventory_id", nullable = false)
+    @JoinColumn(name = "inventory_id", referencedColumnName = "inventory_id", nullable = false, updatable = false, insertable = false)
     private InventoryEntity inventoryByInventoryId;
     @ManyToOne
     @JoinColumn(name = "staff_id", referencedColumnName = "staff_id", nullable = false)
