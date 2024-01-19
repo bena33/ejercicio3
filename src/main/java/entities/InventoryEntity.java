@@ -32,7 +32,7 @@ public class InventoryEntity {
     @OneToMany(mappedBy = "inventoryByInventoryId")
     private List<RentalEntity> rentalsByInventoryId;
 
-    public Object getInventoryId() {
+    public short getInventoryId() {
         return inventoryId;
     }
 
@@ -100,4 +100,5 @@ public class InventoryEntity {
     public void setRentalsByInventoryId(List<RentalEntity> rentalsByInventoryId) {
         this.rentalsByInventoryId = rentalsByInventoryId;
     }
+
 }

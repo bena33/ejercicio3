@@ -18,8 +18,8 @@ public class RentalEntity {
     @Column(name = "rental_date", nullable = false)
     private Timestamp rentalDate;
     @Basic
-    @Column(name = "inventory_id", nullable = false , insertable = false, updatable = false)
-    private Object inventoryId;
+    @Column(name = "inventory_id", nullable = false )
+    private short inventoryId;
     @Basic
     @Column(name = "customer_id", nullable = false , insertable = false, updatable = false)
     private short customerId;
@@ -60,11 +60,11 @@ public class RentalEntity {
         this.rentalDate = rentalDate;
     }
 
-    public Object getInventoryId() {
+    public short getInventoryId() {
         return inventoryId;
     }
 
-    public void setInventoryId(Object inventoryId) {
+    public void setInventoryId(short inventoryId) {
         this.inventoryId = inventoryId;
     }
 

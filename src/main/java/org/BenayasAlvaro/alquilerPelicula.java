@@ -46,29 +46,38 @@ public class alquilerPelicula {
 
                             List<InventoryEntity> inventario = new ArrayList<>(pelicula.getInventoriesByFilmId());
                             if (!inventario.isEmpty()) {
-                                alquiler.setInventoryId(inventario.get(0));
+                                // Verifica si hay existencias disponibles en el inventario
+                                boolean existenciasDisponibles = false;
+
+                                for (InventoryEntity inventory : inventario) {
+                                    if (inventory.getFilmByFilmId().equals(pelicula) && inventory.getRentalsByInventoryId().isEmpty()) {
+                                        existenciasDisponibles = true;
+                                        break;
+                                    }
+                                }
+
+                                if (existenciasDisponibles) {
+                                    System.out.printf("inventario: %d \n" ,inventario.get(0).getInventoryId());
+                                    alquiler.setInventoryId(inventario.get(0).getInventoryId());
+                                    alquiler.setRentalDate(Timestamp.from(Instant.now()));
+
+                                    alquiler.setCustomerByCustomerId(cliente);
+
+                                    em.getTransaction().begin();
+                                    em.persist(alquiler);
+                                    em.flush();
+                                    em.getTransaction().commit();
+
+                                    System.out.println("Alquiler realizado con éxito.");
+                                } else {
+                                    System.out.println("Error: No hay existencias disponibles en el inventario para la película seleccionada.");
+                                }
+                            } else {
+                                System.out.println("Error: No hay existencias disponibles en el inventario para la película seleccionada.");
                             }
-                            alquiler.setRentalDate(Timestamp.from(Instant.now()));
-
-                            alquiler.setCustomerByCustomerId(cliente);
-
-                            em.getTransaction().begin();
-                            em.persist(alquiler);
-                            em.flush();
-                            em.getTransaction().commit();
-
-                            System.out.println("Alquiler realizado con éxito.");
-
                         }
                     }
                 }
-
-
-
-
-
-
-
             } finally {
                 em.close();
                 emf.close();
